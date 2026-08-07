@@ -1,0 +1,30 @@
+{
+  "_comment": "Copy this file to config.json and edit the paths to match YOUR cabinet. See README.md > 'Finding your real paths' for a script that discovers these automatically on the cab PC.",
+
+  "pinUpSystemPath": "C:\\PinUPSystem",
+
+  "pupMasterDbPath": "C:\\PinUPSystem\\Databases\\PUPMaster\\PUPMaster.db",
+
+  "system": "Visual Pinball X",
+
+  "highscoreTextDirs": [
+    "C:\\PinUPSystem\\POPMedia\\Visual Pinball X\\HighScores",
+    "C:\\PinUPSystem\\PinUPMenu\\HighScores"
+  ],
+
+  "mediaDirs": {
+    "backglass": "C:\\PinUPSystem\\POPMedia\\Visual Pinball X\\Backglass",
+    "table": "C:\\PinUPSystem\\POPMedia\\Visual Pinball X\\Table",
+    "loading": "C:\\PinUPSystem\\POPMedia\\Visual Pinball X\\Loading",
+    "wheel": "C:\\PinUPSystem\\POPMedia\\Visual Pinball X\\Wheel"
+  },
+
+  "backgroundPriority": ["backglass", "loading", "table"],
+
+  "port": 8080,
+  "rescanIntervalSeconds": 60,
+  "secondsPerGame": 10,
+  "maxScoresPerGame": 5,
+
+  "onlyTablesWithScores": true
+}

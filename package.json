@@ -1,0 +1,15 @@
+{
+  "name": "pinball-highscores",
+  "version": "1.0.0",
+  "description": "Local high-score attract display for a Visual Pinball X / PinUP Popper cabinet, viewable from a TV browser on the LAN.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^8.7.0",
+    "chokidar": "^3.6.0",
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pinball High Scores</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="bg-layer-a" class="bg-layer"></div>
+  <div id="bg-layer-b" class="bg-layer"></div>
+  <div class="scrim"></div>
+
+  <main id="stage">
+    <header id="game-header">
+      <div id="wheel-wrap"><img id="wheel-img" alt="" /></div>
+      <h1 id="game-title">&nbsp;</h1>
+    </header>
+
+    <ol id="score-list" class="score-list"></ol>
+
+    <div id="date-note" class="date-note"></div>
+  </main>
+
+  <div id="empty-state" class="empty-state" hidden>
+    <h2>No high scores found yet</h2>
+    <p>Check <code>config.json</code> — see README.md for how to locate your PinUP Popper paths.</p>
+  </div>
+
+  <div id="progress-bar"><div id="progress-fill"></div></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
