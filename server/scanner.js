@@ -1,6 +1,8 @@
 const { scanPupMasterDb } = require('./scanners/pupMasterDb');
 const { findAndParseHighscores } = require('./scanners/highscoreText');
 const { resolveBackground, resolveWheel } = require('./scanners/media');
+const { refreshHighscoresViaPinemhi } = require('./scanners/pinemhiRefresh');
+const { resolveRomFromVpxFile } = require('./scanners/romFromVpxFile');
 
 /**
  * Runs a full scan and returns the list of games with their scores + media,
@@ -8,13 +10,37 @@ const { resolveBackground, resolveWheel } = require('./scanners/media');
  * and the watcher both call into.
  */
 function runFullScan(config) {
-  const games = scanPupMasterDb(config.pupMasterDbPath, config.system);
+  const games = scanPupMasterDb(config.pupMasterDbPath, config.system, {
+    enabled: !!config.onlyFavoritesMostPlayedRecentlyPlayed,
+    mostPlayedCount: config.mostPlayedCount,
+    recentPlayedDays: config.recentPlayedDays,
+  });
+
+  // Popper's own ROM field is sometimes never filled in — fall back to
+  // reading the ROM straight out of each table's .vpx script when that's
+  // the case, rather than silently having no scores for that table.
+  if (config.vpxTablesDir) {
+    for (const game of games) {
+      if (!game.rom) {
+        game.rom = resolveRomFromVpxFile(config.vpxTablesDir, game.fileBaseName, config.vpinmameNvramDir);
+      }
+    }
+  }
+
+  if (config.pinemhiExePath) {
+    refreshHighscoresViaPinemhi(
+      config.pinemhiExePath,
+      games.map((g) => g.rom),
+      (config.highscoreTextDirs || [])[0]
+    );
+  }
 
   const results = games.map((game) => {
     const { scores, fileModifiedAt } = findAndParseHighscores(
       game.fileBaseName,
       config.highscoreTextDirs,
-      config.maxScoresPerGame
+      config.maxScoresPerGame,
+      game.rom
     );
     const background = resolveBackground(game.fileBaseName, config.mediaDirs, config.backgroundPriority);
     const wheel = resolveWheel(game.fileBaseName, config.mediaDirs);

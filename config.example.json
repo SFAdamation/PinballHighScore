@@ -12,6 +12,13 @@
     "C:\\PinUPSystem\\PinUPMenu\\HighScores"
   ],
 
+  "_comment_pinemhi": "Some newer PINemHi builds ('LeaderBoard' editions) only print scores to stdout and never write local hi/<rom>.txt files. If yours is one of those, set pinemhiExePath to PINemHi.exe's full path and the server will invoke it itself each rescan and write its output into highscoreTextDirs[0]. Leave blank/omit if your PINemHi already writes .txt files on its own (the classic behavior).",
+  "pinemhiExePath": "",
+
+  "_comment_vpxTablesDir": "If PinUP Popper's own ROM field is empty for some/all tables, set this to your VPX Tables folder and the server will read each table's ROM straight out of its .vpx script as a fallback. Leave blank/omit if Popper's ROM field is already populated. vpinmameNvramDir (VPinMAME's nvram folder) is optional but recommended alongside it — it lets the server double check its .vpx-script guess against real .nv files on disk, correcting for the odd table whose script uses a PUP-pack alias instead of the real ROM name.",
+  "vpxTablesDir": "",
+  "vpinmameNvramDir": "",
+
   "mediaDirs": {
     "backglass": "C:\\PinUPSystem\\POPMedia\\Visual Pinball X\\Backglass",
     "table": "C:\\PinUPSystem\\POPMedia\\Visual Pinball X\\Table",
@@ -26,5 +33,10 @@
   "secondsPerGame": 10,
   "maxScoresPerGame": 5,
 
-  "onlyTablesWithScores": true
+  "onlyTablesWithScores": true,
+
+  "_comment_playlistFilter": "Only show tables that are Favorites, among the top mostPlayedCount most-played, or played within recentPlayedDays days in PinUP Popper. Requires the GamesStats/PlayListDetails tables (present in newer Popper DB schemas).",
+  "onlyFavoritesMostPlayedRecentlyPlayed": false,
+  "mostPlayedCount": 15,
+  "recentPlayedDays": 180
 }

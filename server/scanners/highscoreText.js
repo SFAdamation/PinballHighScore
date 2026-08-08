@@ -61,17 +61,22 @@ function parseHighscoreFile(filePath) {
 }
 
 /**
- * Finds a highscore .txt file for the given table (matched by file base name)
- * across the configured directories, and parses it.
+ * Finds a highscore .txt file for the given table across the configured
+ * directories, and parses it. PINemHi (and VPinMAME's nvram) names these
+ * files after the ROM, not the VPX table filename, so an exact `<rom>.txt`
+ * match is tried first when a ROM is known; fileBaseName fuzzy-matching is
+ * the fallback for setups where highscore files are instead named after the
+ * table itself.
  */
-function findAndParseHighscores(fileBaseName, highscoreTextDirs, maxScores) {
+function findAndParseHighscores(fileBaseName, highscoreTextDirs, maxScores, rom) {
   for (const dir of highscoreTextDirs || []) {
     if (!fs.existsSync(dir)) continue;
     const entries = fs.readdirSync(dir);
     const lowerTarget = fileBaseName.toLowerCase();
+    const lowerRom = rom ? rom.toLowerCase() : null;
     const match = entries.find((f) => {
       const base = f.replace(/\.txt$/i, '').toLowerCase();
-      return base === lowerTarget || base.startsWith(lowerTarget);
+      return base === lowerRom || base === lowerTarget || base.startsWith(lowerTarget);
     });
     if (!match) continue;
 
